@@ -30,17 +30,20 @@ Vagrant.configure("2") do |config|
     chef.add_recipe "openssl"
     chef.add_recipe "ohai"
     chef.add_recipe "apt"
+    
+    chef.add_recipe "dotdeb" # Personnal recipe
+    
     chef.add_recipe "nginx"
     chef.add_recipe "mysql::server"
     chef.add_recipe "sqlite"
     
     # Personnal recipes
-    chef.add_recipe "dotdeb"
     chef.add_recipe "redis"
-    chef.add_recipe "gettext"
-    chef.add_recipe "locales"
     chef.add_recipe "php5-fpm-nginx"
     chef.add_recipe "phpmyadmin"
+    
+    chef.add_recipe "gettext"
+    chef.add_recipe "locales"
 
     # Recipes configuration
     chef.json = {
@@ -56,7 +59,7 @@ Vagrant.configure("2") do |config|
         :use_upstart             => false
       },
 
-      'locales' => { 'locales' => ['cs', 'de', 'en', 'es', 'fr', 'it', 'nl', 'pl', 'pt', 'ru', 'tr', 'zh-hans'] },
+      'locales'         => { 'locales' => ['cs', 'de', 'en', 'es', 'fr', 'it', 'nl', 'pl', 'pt', 'ru', 'tr', 'zh-hans'] },
     }
   end
   
