@@ -39,6 +39,7 @@ Vagrant.configure("2") do |config|
     chef.add_recipe "gettext"
     chef.add_recipe "locales"
     chef.add_recipe "php5-fpm-nginx"
+    chef.add_recipe "phpmyadmin"
 
     # Recipes configuration
     chef.json = {
