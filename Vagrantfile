@@ -21,19 +21,28 @@ Vagrant.configure("2") do |config|
   # Shared folders
   config.vm.synced_folder "../../",   "/home/vagrant/work"
 
-  # Enable provisioning with chef solo, specifying a cookbooks path, roles
-  # path, and data_bags path (all relative to this Vagrantfile), and adding
-  # some recipes and/or roles.
-  #
-  # config.vm.provision :chef_solo do |chef|
-  #   chef.cookbooks_path = "../my-recipes/cookbooks"
-  #   chef.roles_path = "../my-recipes/roles"
-  #   chef.data_bags_path = "../my-recipes/data_bags"
-  #   chef.add_recipe "mysql"
-  #   chef.add_role "web"
-  #
-  #   # You may also specify custom JSON attributes:
-  #   chef.json = { :mysql_password => "foo" }
-  # end
+  # Chef solo provisionning
+  config.vm.provision :chef_solo do |chef|
+
+    chef.cookbooks_path = "chef-solo-cookbooks"
+
+    # External recipes
+    chef.add_recipe "openssl"
+    chef.add_recipe "ohai"
+    chef.add_recipe "apt"
+    chef.add_recipe "nginx"
+    chef.add_recipe "mysql::server"
+    chef.add_recipe "sqlite"
+
+    # Recipes configuration
+    chef.json = {
+      'mysql' => {
+        :server_root_password    => "vagrant",
+        :server_debian_password  => "debian",
+        :server_repl_password    => "replicant",
+        :use_upstart             => false
+      }
+    }
+  end
   
 end
