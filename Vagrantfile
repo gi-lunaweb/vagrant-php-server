@@ -33,6 +33,9 @@ Vagrant.configure("2") do |config|
     chef.add_recipe "nginx"
     chef.add_recipe "mysql::server"
     chef.add_recipe "sqlite"
+    
+    # Personnal recipes
+    chef.add_recipe "redis"
 
     # Recipes configuration
     chef.json = {
