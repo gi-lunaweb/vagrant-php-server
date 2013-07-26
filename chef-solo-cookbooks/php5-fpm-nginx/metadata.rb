@@ -10,6 +10,9 @@ end
 
 depends "apt"
 depends "nginx"
+depends "mysql"
+depends "sqlite"
+depends "redis"
 
 recipe "php5-fpm-nginx", "Installs php5-fpm using packages."
 
