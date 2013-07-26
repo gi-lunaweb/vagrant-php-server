@@ -41,6 +41,7 @@ Vagrant.configure("2") do |config|
     chef.add_recipe "redis"
     chef.add_recipe "php5-fpm-nginx"
     chef.add_recipe "phpmyadmin"
+    chef.add_recipe "nginx-vhosts"
     
     chef.add_recipe "gettext"
     chef.add_recipe "locales"
@@ -58,6 +59,7 @@ Vagrant.configure("2") do |config|
         :server_repl_password    => "replicant",
         :use_upstart             => false
       },
+      'nginx-vhosts'    => { 'vhosts' => Dir[File.expand_path("../vhosts/*", __FILE__)].reduce({}){ |vhosts, file| vhosts[File.basename(file)] = File.read(file); vhosts } },
 
       'locales'         => { 'locales' => ['cs', 'de', 'en', 'es', 'fr', 'it', 'nl', 'pl', 'pt', 'ru', 'tr', 'zh-hans'] },
     }
