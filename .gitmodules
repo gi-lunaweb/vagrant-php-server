@@ -4,3 +4,6 @@
 [submodule "chef-solo-cookbooks/mysql"]
 	path = chef-solo-cookbooks/mysql
 	url = https://github.com/opscode-cookbooks/mysql.git
+[submodule "chef-solo-cookbooks/nginx"]
+	path = chef-solo-cookbooks/nginx
+	url = https://github.com/opscode-cookbooks/nginx.git
