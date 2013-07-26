@@ -13,3 +13,6 @@
 [submodule "chef-solo-cookbooks/openssl"]
 	path = chef-solo-cookbooks/openssl
 	url = https://github.com/opscode-cookbooks/openssl.git
+[submodule "chef-solo-cookbooks/sqlite"]
+	path = chef-solo-cookbooks/sqlite
+	url = https://github.com/opscode-cookbooks/sqlite.git
