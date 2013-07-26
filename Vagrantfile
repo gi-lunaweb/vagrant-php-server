@@ -36,6 +36,7 @@ Vagrant.configure("2") do |config|
     
     # Personnal recipes
     chef.add_recipe "redis"
+    chef.add_recipe "gettext"
 
     # Recipes configuration
     chef.json = {
