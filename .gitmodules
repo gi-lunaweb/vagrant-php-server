@@ -10,3 +10,6 @@
 [submodule "chef-solo-cookbooks/ohai"]
 	path = chef-solo-cookbooks/ohai
 	url = https://github.com/opscode-cookbooks/ohai.git
+[submodule "chef-solo-cookbooks/openssl"]
+	path = chef-solo-cookbooks/openssl
+	url = https://github.com/opscode-cookbooks/openssl.git
