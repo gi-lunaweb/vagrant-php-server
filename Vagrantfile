@@ -37,6 +37,7 @@ Vagrant.configure("2") do |config|
     # Personnal recipes
     chef.add_recipe "redis"
     chef.add_recipe "gettext"
+    chef.add_recipe "locales"
 
     # Recipes configuration
     chef.json = {
@@ -45,7 +46,9 @@ Vagrant.configure("2") do |config|
         :server_debian_password  => "debian",
         :server_repl_password    => "replicant",
         :use_upstart             => false
-      }
+      },
+
+      'locales' => { 'locales' => ['cs', 'de', 'en', 'es', 'fr', 'it', 'nl', 'pl', 'pt', 'ru', 'tr', 'zh-hans'] },
     }
   end
   
