@@ -1,3 +1,6 @@
 [submodule "chef-solo-cookbooks/apt"]
 	path = chef-solo-cookbooks/apt
 	url = https://github.com/opscode-cookbooks/apt.git
+[submodule "chef-solo-cookbooks/mysql"]
+	path = chef-solo-cookbooks/mysql
+	url = https://github.com/opscode-cookbooks/mysql.git
