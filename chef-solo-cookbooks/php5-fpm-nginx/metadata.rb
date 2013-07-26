@@ -9,6 +9,7 @@ version           "1.0.0"
 end
 
 depends "apt"
+depends "dotdeb"
 depends "nginx"
 depends "mysql"
 depends "sqlite"

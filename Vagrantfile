@@ -35,6 +35,7 @@ Vagrant.configure("2") do |config|
     chef.add_recipe "sqlite"
     
     # Personnal recipes
+    chef.add_recipe "dotdeb"
     chef.add_recipe "redis"
     chef.add_recipe "gettext"
     chef.add_recipe "locales"
@@ -44,8 +45,10 @@ Vagrant.configure("2") do |config|
     # Recipes configuration
     chef.json = {
       
+      'dotdeb'          => { 'target-release' => 'squeeze', 'pin-priority' => "600" },
+      
       'nginx'           => { 'user' => 'vagrant'},
-      'php5-fpm-nginx'  => { 'user'  => 'vagrant', 'group' => 'vagrant' },
+      'php5-fpm-nginx'  => { 'user' => 'vagrant', 'group' => 'vagrant' },
       'mysql'           => {
         :server_root_password    => "vagrant",
         :server_debian_password  => "debian",
