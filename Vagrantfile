@@ -50,6 +50,7 @@ Vagrant.configure("2") do |config|
     
     chef.add_recipe "gettext"
     chef.add_recipe "locales"
+    chef.add_recipe "image-tools"
 
     # Recipes configuration
     chef.json = {
