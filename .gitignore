@@ -1,6 +1,7 @@
 .vagrant
 
 /vhosts/*
+!/vhosts/.gitkeep
 
 ### Mess files
 

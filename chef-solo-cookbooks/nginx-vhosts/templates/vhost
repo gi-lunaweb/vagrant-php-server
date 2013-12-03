@@ -1,0 +1,25 @@
+# This is a template file
+#
+# Copy it in the vhosts directory and replace :
+# - {project-name} with your project name
+# - {absolute-project-root-path} with the absolute path to your project's root inside the VM
+#
+
+server {
+
+  listen 80;
+  server_name {project-name}.local.dev;
+
+  root {absolute-project-root-path};
+
+  index  index.html index.htm index.php;
+
+  location ~ \.php$ {
+    fastcgi_pass  php_backend;
+    fastcgi_index index.php;
+    fastcgi_param APPLICATION_ENV development;
+    fastcgi_param SCRIPT_FILENAME {absolute-project-root-path}$fastcgi_script_name;
+    
+    include fastcgi_params;
+  }
+}
