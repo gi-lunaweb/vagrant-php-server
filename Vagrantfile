@@ -16,7 +16,7 @@ Vagrant.configure("2") do |config|
   end
 
   # Network config
-  config.vm.network :private_network, ip: "192.168.50.4"
+  config.vm.network :private_network, ip: "192.168.50.4"                      # TODO: customize
   config.vm.network :forwarded_port, guest: 80, host: 8000
 
   # If true, then any SSH connections made will enable agent forwarding.
@@ -24,7 +24,7 @@ Vagrant.configure("2") do |config|
   # config.ssh.forward_agent = true
 
   # Shared folders
-  config.vm.synced_folder "../../",   "/home/vagrant/work"
+  config.vm.synced_folder "../../",   "/home/vagrant/work"                    # TODO: customize
 
   # Chef solo provisionning
   config.vm.provision :chef_solo do |chef|
@@ -66,8 +66,8 @@ Vagrant.configure("2") do |config|
         :server_repl_password    => "replicant",
         :use_upstart             => false
       },
+      
       'nginx-vhosts'    => { 'vhosts' => Dir[File.expand_path("../vhosts/*", __FILE__)].reduce({}){ |vhosts, file| vhosts[File.basename(file)] = File.read(file); vhosts } },
-
       'locales'         => { 'locales' => ['cs', 'de', 'en', 'es', 'fr', 'it', 'nl', 'pl', 'pt', 'ru', 'tr', 'zh-hans'] },
     }
   end
