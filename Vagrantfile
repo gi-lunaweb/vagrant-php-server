@@ -44,6 +44,7 @@ Vagrant.configure("2") do |config|
     
     # Personnal recipes
     chef.add_recipe "redis"
+    chef.add_recipe "php5"
     chef.add_recipe "php5-fpm-nginx"
     chef.add_recipe "phpmyadmin"
     chef.add_recipe "nginx-vhosts"

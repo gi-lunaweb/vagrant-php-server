@@ -11,9 +11,7 @@ end
 depends "apt"
 depends "dotdeb"
 depends "nginx"
-depends "mysql"
-depends "sqlite"
-depends "redis"
+depends "php5"
 
 recipe "php5-fpm-nginx", "Installs php5-fpm using packages."
 
