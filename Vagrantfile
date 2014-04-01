@@ -54,6 +54,8 @@ Vagrant.configure("2") do |config|
     chef.add_recipe "image-tools"
     chef.add_recipe "benchmark"
 
+    chef.add_recipe "utils" # Don't want to create new recipe for each random package…
+
     # Recipes configuration
     chef.json = {
       
@@ -70,6 +72,7 @@ Vagrant.configure("2") do |config|
       
       'nginx-vhosts'    => { 'vhosts' => Dir[File.expand_path("../vhosts/*", __FILE__)].reduce({}){ |vhosts, file| vhosts[File.basename(file)] = File.read(file); vhosts } },
       'locales'         => { 'locales' => ['cs', 'de', 'en', 'es', 'fr', 'it', 'nl', 'pl', 'pt', 'ru', 'tr', 'zh-hans'] },
+      'utils'           => { 'packages' => ['curl'] },
     }
   end
   
