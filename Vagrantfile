@@ -70,7 +70,7 @@ Vagrant.configure("2") do |config|
         :use_upstart             => false
       },
       
-      'nginx-vhosts'    => { 'vhosts' => Dir[File.expand_path("../vhosts/*", __FILE__)].reduce({}){ |vhosts, file| vhosts[File.basename(file)] = File.read(file); vhosts } },
+      'nginx-vhosts'    => { 'vhosts' => Dir[File.expand_path("../vhosts/*", __FILE__)].reduce({}){ |vhosts, file| vhosts[File.basename(file)] = File.read(file) unless File.directory?(file); vhosts } },
       'locales'         => { 'locales' => ['cs', 'de', 'en', 'es', 'fr', 'it', 'nl', 'pl', 'pt', 'ru', 'tr', 'zh-hans'] },
       'utils'           => { 'packages' => ['curl'] },
     }
