@@ -16,7 +16,7 @@ Vagrant.configure("2") do |config|
   end
 
   # Network config
-  config.vm.network :private_network, ip: "192.168.50.4"                      # TODO: customize
+  config.vm.network :private_network, ip: "192.168.50.12"                      # TODO: customize
   config.vm.network :forwarded_port, guest: 80, host: 8000
 
   # If true, then any SSH connections made will enable agent forwarding.
@@ -30,36 +30,50 @@ Vagrant.configure("2") do |config|
   config.vm.provision :chef_solo do |chef|
 
     chef.cookbooks_path = "chef-solo-cookbooks"
+    
+    #
+    # Recipes
+    #
 
-    # External recipes
+    # Base recipes (Opscode cookbooks)
     chef.add_recipe "openssl"
     chef.add_recipe "ohai"
     chef.add_recipe "apt"
     
-    chef.add_recipe "dotdeb" # Personnal recipe
+    # Additional apt sources
+    chef.add_recipe "dotdeb"
+    chef.add_recipe "phusion"
     
-    chef.add_recipe "nginx"
-    chef.add_recipe "mysql::server"
-    chef.add_recipe "sqlite"
-    
-    # Personnal recipes
-    chef.add_recipe "redis"
+    # Install web server with Ruby & PHP5 support
+    chef.add_recipe "passenger"     # Must be run before nginx to avoid configuration files conflict
     chef.add_recipe "php5"
+    chef.add_recipe "nginx"         # Opscode cookbook
+    
+    # Databases
+    chef.add_recipe "mysql::server" # Opscode cookbook
+    chef.add_recipe "sqlite"        # Opscode cookbook
+    chef.add_recipe "redis"
+    
+    # Configure web server
+    chef.add_recipe "passenger-nginx"
     chef.add_recipe "php5-fpm-nginx"
+    
     chef.add_recipe "phpmyadmin"
     chef.add_recipe "nginx-vhosts"
     
+    # Additional tools
     chef.add_recipe "gettext"
     chef.add_recipe "locales"
     chef.add_recipe "image-tools"
     chef.add_recipe "benchmark"
+    chef.add_recipe "utils"         # Don't want to create new recipe for each random package…
 
-    chef.add_recipe "utils" # Don't want to create new recipe for each random package…
-
+    #
     # Recipes configuration
+    #
     chef.json = {
-      
       'dotdeb'          => { 'target-release' => 'squeeze', 'pin-priority' => "600" },
+      'phusion'         => { 'target-release' => 'precise', 'pin-priority' => "800" },
       
       'nginx'           => { 'user' => 'vagrant'},
       'php5-fpm-nginx'  => { 'user' => 'vagrant', 'group' => 'vagrant' },
@@ -71,6 +85,7 @@ Vagrant.configure("2") do |config|
       },
       
       'nginx-vhosts'    => { 'vhosts' => Dir[File.expand_path("../vhosts/*", __FILE__)].reduce({}){ |vhosts, file| vhosts[File.basename(file)] = File.read(file) unless File.directory?(file); vhosts } },
+      
       'locales'         => { 'locales' => ['cs', 'de', 'en', 'es', 'fr', 'it', 'nl', 'pl', 'pt', 'ru', 'tr', 'zh-hans'] },
       'utils'           => { 'packages' => ['curl'] },
     }
