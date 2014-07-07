@@ -2,6 +2,7 @@
 
 /vhosts/*
 !/vhosts/.gitkeep
+!/vhosts/templates
 
 ### Mess files
 

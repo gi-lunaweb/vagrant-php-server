@@ -1,0 +1,44 @@
+server {
+
+  listen 80;
+  server_name {name};
+
+  # Document Root configuration
+  root {path};
+
+  location / {
+  
+    try_files $uri $uri/ /index.php;
+  
+    ## PHP processing.
+    location ~ ^(?<script>.+\.php)(?<path_info>.*)$ {
+      
+      # Zero-day exploit defense.
+      # http://forum.nginx.org/read.php?2,88845,page=3
+      try_files $uri =404;
+  
+      include fastcgi_params;
+  
+      fastcgi_buffers 256 4k;
+      fastcgi_intercept_errors on;
+      fastcgi_read_timeout 14400; ## Allow 4 hrs - pass timeout responsibility to upstream
+      fastcgi_index index.php; 
+  
+      ## The fastcgi_params must be redefined from the ones given in fastcgi.conf. No longer standard names but arbitrary: named patterns in regex.
+      fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+      fastcgi_param SCRIPT_NAME $script;
+      fastcgi_param PATH_INFO $path_info;
+  
+      ## Additionnal params for application
+      fastcgi_param APPLICATION_ENV development;
+         
+      ## Passing the request upstream to the FastCGI listener.
+      fastcgi_pass php_backend;
+    }        
+  }
+  
+  index  index.php;
+  
+  # Add trailing slash to */wp-admin requests.
+  rewrite /wp-admin$ $scheme://$host$uri/ permanent;
+}

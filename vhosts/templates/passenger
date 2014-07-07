@@ -1,0 +1,14 @@
+server {
+
+	listen 80;
+  server_name {name};
+    
+  # Document Root configuration
+  root {path}/public;
+    
+  index  index.html index.htm;
+
+  # Passenger
+  passenger_enabled on;
+  rails_env staging;
+}

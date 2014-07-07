@@ -1,0 +1,36 @@
+server {
+
+  listen 80;
+  server_name {name};
+
+  # Document Root configuration
+  root {path};
+  
+  index  index.html index.htm index.php;
+
+  location / {
+    ## Zend Framework
+    # try_files $uri $uri/ /index.php?$args;
+    
+    ## Others
+    # try_files $uri $uri/ @rewrite;
+  }
+
+  location @rewrite {
+    ## Limonade
+    # rewrite ^/(.*)$ /index.php?u=$1&$args;
+    
+    ## Drupal
+    # rewrite ^/(.*)$ /index.php?q=$1;
+  }
+  
+  location ~ \.php$ {
+
+    fastcgi_pass  php_backend;
+    fastcgi_index index.php;
+    fastcgi_param APPLICATION_ENV development;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+      
+    include fastcgi_params;
+  }
+}
