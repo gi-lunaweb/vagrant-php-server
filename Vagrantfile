@@ -72,22 +72,26 @@ Vagrant.configure("2") do |config|
     # Recipes configuration
     #
     chef.json = {
-      'dotdeb'          => { 'target-release' => 'squeeze', 'pin-priority' => "600" },
-      'phusion'         => { 'target-release' => 'precise', 'pin-priority' => "800" },
+      # Additional apt sources
+      'dotdeb'  => { 'target-release' => 'squeeze', 'pin-priority' => "600" },
+      'phusion' => { 'target-release' => 'precise', 'pin-priority' => "800" },
       
+      # Web server configuration
       'nginx'           => { 'user' => 'vagrant'},
       'php5-fpm-nginx'  => { 'user' => 'vagrant', 'group' => 'vagrant' },
-      'mysql'           => {
+      'nginx-vhosts'    => { 'vhosts' => Dir[File.expand_path("../vhosts/*", __FILE__)].reduce({}){ |vhosts, file| vhosts[File.basename(file)] = File.read(file) unless File.directory?(file); vhosts } },
+      
+      # Database configuration
+      'mysql' => {
         :server_root_password    => "vagrant",
         :server_debian_password  => "debian",
         :server_repl_password    => "replicant",
         :use_upstart             => false
       },
       
-      'nginx-vhosts'    => { 'vhosts' => Dir[File.expand_path("../vhosts/*", __FILE__)].reduce({}){ |vhosts, file| vhosts[File.basename(file)] = File.read(file) unless File.directory?(file); vhosts } },
-      
-      'locales'         => { 'locales' => ['cs', 'de', 'en', 'es', 'fr', 'it', 'nl', 'pl', 'pt', 'ru', 'tr', 'zh-hans'] },
-      'utils'           => { 'packages' => ['curl'] },
+      # Additional configurations
+      'locales' => { 'locales' => ['cs', 'de', 'en', 'es', 'fr', 'it', 'nl', 'pl', 'pt', 'ru', 'tr', 'zh-hans'] },
+      'utils'   => { 'packages' => ['libsqlite3-dev', 'libxml2-dev', 'libxslt-dev', 'ruby-bundler', 'rubygems', 'curl'] },
     }
   end
   
