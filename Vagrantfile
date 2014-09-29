@@ -16,7 +16,7 @@ Vagrant.configure("2") do |config|
   end
 
   # Network config
-  config.vm.network :private_network, ip: "192.168.50.12"                      # TODO: customize
+  config.vm.network :private_network, ip: "192.168.50.4"                      # TODO: customize
   config.vm.network :forwarded_port, guest: 80, host: 8000
 
   # If true, then any SSH connections made will enable agent forwarding.
@@ -79,7 +79,12 @@ Vagrant.configure("2") do |config|
       # Web server configuration
       'nginx'           => { 'user' => 'vagrant'},
       'php5-fpm-nginx'  => { 'user' => 'vagrant', 'group' => 'vagrant' },
-      'nginx-vhosts'    => { 'vhosts' => Dir[File.expand_path("../vhosts/*", __FILE__)].reduce({}){ |vhosts, file| vhosts[File.basename(file)] = File.read(file) unless File.directory?(file); vhosts } },
+      'nginx-vhosts'    => { 'vhosts' => (Dir[File.expand_path("../vhosts/*", __FILE__)].reduce({}) do |vhosts, file|
+                                            unless File.directory?(file)
+                                              vhosts[File.basename(file)] = File.read(file)
+                                            end
+                                            vhosts
+                                          end) },
       
       # Database configuration
       'mysql' => {
